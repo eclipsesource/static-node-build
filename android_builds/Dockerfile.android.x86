@@ -34,4 +34,4 @@ RUN echo "[2/2] setting up..." && \
 	rm $NDK_NAME.zip
 
 CMD android-gcc-toolchain x86 --api 17 --host gcc-lpthread -C \
-	sh -c "cd node; ./configure --without-intl --without-inspector --dest-cpu=x86 --dest-os=android --without-snapshot --enable-static && make"
+	sh -c "cd node; ./configure --without-intl --without-inspector --dest-cpu=x86 --dest-os=android --without-snapshot --enable-static && make -j4"
