@@ -35,5 +35,5 @@ RUN echo "[1/2] cloning dependencies..." && \
 
 
 CMD cd node && \
-    CC=o64-gcc CXX=o64-g++ ./configure --without-intl --without-inspector --dest-cpu=x86 --dest-os=mac --without-snapshot --enable-static --ninja && \
+    CC=o64-gcc CXX=o64-g++ ./configure --without-intl --without-inspector --dest-cpu=x64 --dest-os=mac --without-snapshot --enable-static --without-dtrace --xcode && \
     make CC=o64-gcc CXX=o64-g++ -j4
