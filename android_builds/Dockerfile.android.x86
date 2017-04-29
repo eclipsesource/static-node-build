@@ -1,8 +1,6 @@
 FROM philcryer/min-jessie:latest
 
-WORKDIR /build/
-ARG node_version=v7.4.0
-
+RUN mkdir /build 
 ENV NDK_VERSION r13b
 
 ENV NDK /build/android-ndk-$NDK_VERSION
@@ -25,13 +23,17 @@ RUN echo "[0/2] installing packages..." && \
 	file
 
 RUN echo "[1/2] cloning dependencies..." && \
-	git clone https://github.com/sjitech/android-gcc-toolchain && \
-	git clone https://github.com/nodejs/node -b ${node_version}
+        cd /build && \
+	git clone https://github.com/sjitech/android-gcc-toolchain 
 
 RUN echo "[2/2] setting up..." && \
+        cd /build && \
  	curl -fSOL https://dl.google.com/android/repository/$NDK_NAME.zip && \
 	unzip $NDK_NAME.zip && \
 	rm $NDK_NAME.zip
+
+COPY node /build/node/node.x86/
+WORKDIR /build/node/node.x86/
 
 CMD android-gcc-toolchain x86 --api 17 --host gcc-lpthread -C \
 	sh -c "cd node; ./configure --without-intl --without-inspector --dest-cpu=x86 --dest-os=android --without-snapshot --enable-static && make -j4"
