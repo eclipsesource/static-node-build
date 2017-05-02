@@ -1,11 +1,8 @@
 FROM philcryer/min-jessie:latest
 
-WORKDIR /build/
-ARG node_version=v7.4.0
+RUN mkdir /build
 
-ENV NDK_VERSION r13b
-
-ENV CCFLAGS -fPIC
+ENV CFLAGS -fPIC
 ENV CXXFLAGS -fPIC
 
 
@@ -22,8 +19,7 @@ RUN echo "[0/1] installing packages..." && \
         make \
 	file
 
-RUN echo "[1/1] cloning dependencies..." && \
-	git clone https://github.com/sjitech/android-gcc-toolchain && \
-	git clone https://github.com/nodejs/node -b ${node_version}
+COPY node /build/node/node.linux.x64
+WORKDIR /build/node/node.linux.x64
 
-CMD cd node && ./configure --without-intl --without-inspector --dest-cpu=x64 --dest-os=linux --without-snapshot --enable-static && make
+CMD ./configure --without-intl --without-inspector --dest-cpu=x64 --dest-os=linux --without-snapshot --enable-static && make
