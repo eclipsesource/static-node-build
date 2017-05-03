@@ -22,4 +22,4 @@ RUN echo "[0/1] installing packages..." && \
 COPY node /build/node/node.linux.x64
 WORKDIR /build/node/node.linux.x64
 
-CMD ./configure --without-intl --without-inspector --dest-cpu=x64 --dest-os=linux --without-snapshot --enable-static && make
+CMD ./configure --without-intl --without-inspector --dest-cpu=x64 --dest-os=linux --without-snapshot --enable-static && make > /dev/null
